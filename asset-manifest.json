@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Project-3-Deployment/static/css/main.91215dfa.css",
+    "main.js": "/Project-3-Deployment/static/js/main.dc195925.js",
+    "index.html": "/Project-3-Deployment/index.html",
+    "main.91215dfa.css.map": "/Project-3-Deployment/static/css/main.91215dfa.css.map",
+    "main.dc195925.js.map": "/Project-3-Deployment/static/js/main.dc195925.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.91215dfa.css",
+    "static/js/main.dc195925.js"
+  ]
+}
