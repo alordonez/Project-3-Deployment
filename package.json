@@ -2,6 +2,7 @@
   "name": "pos-system",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://alordonez.github.io/Project-3-Deployment/",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -26,6 +27,8 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
+    "predeploy": "yarn ruin build",
+    "deploy": "gh-pages -d build -b master",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
