@@ -10,7 +10,7 @@ export default function Login() {
 
   // get all items
   useEffect(() => {
-    axios.get("http://localhost:5000/items").then((result) => {
+    axios.get("http://localhost:5001/items").then((result) => {
       setAllItems(result.data);
       const itemData = result.data;
 
