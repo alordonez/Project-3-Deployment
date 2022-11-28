@@ -124,6 +124,9 @@ app.put("/items/count", async (req, res) => {
 
 // DELETE REQUESTS //
 
+app.get("/testing", (req,res)=>{
+  res.send("THIS WORKS");
+})
 app.listen(5000, () => {
   console.log("Listening on port 5000");
 });
