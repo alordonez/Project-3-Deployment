@@ -8,6 +8,8 @@ app.use(express.json());
 
 // GET REQUESTS //
 
+const PORT = process.env.PORT || 5000;
+
 // retrieves all items
 app.get("/items", async (req, res) => {
   try {
@@ -127,6 +129,6 @@ app.put("/items/count", async (req, res) => {
 app.get("/testing", (req,res)=>{
   res.send("THIS WORKS");
 })
-app.listen(5000, () => {
-  console.log("Listening on port 5000");
+app.listen(5001, () => {
+  console.log("Listening on port"+PORT);
 });
