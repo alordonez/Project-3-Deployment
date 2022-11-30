@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import party from "party-js";
 import "./customer_page.css";
 
 export default function Customer() {
-  // confetti
   useEffect(() => {
+    // confetti
     document.querySelectorAll(".confetti-button").forEach((e) =>
       e.addEventListener("click", function (e) {
         party.confetti(this);
@@ -18,33 +18,24 @@ export default function Customer() {
   // preset data for button
   const pizza_type = [
     {
-      name: "1-Topping",
+      name: "Customize Pizza",
       type: 0,
-      topping_amount: [1, 1],
-    },
-    {
-      name: "2-4 Topping",
-      type: 1,
-      topping_amount: [2, 4],
+      topping_amount: [0, 4],
     },
     {
       name: "Orginial Cheese",
-      type: 2,
+      type: 1,
       topping_amount: [0, 0],
     },
     {
       name: "Classic Pepproni",
-      type: 3,
+      type: 2,
       topping_amount: [1, 1],
     },
   ];
 
   // Routes
   const navigate = useNavigate();
-
-  const goHome = () => {
-    navigate("/home");
-  };
 
   const goCustomer = () => {
     navigate("/customer");
@@ -69,9 +60,26 @@ export default function Customer() {
     goSauces();
   };
 
+  // Delete Local Storage
+  const resetStorage = () => {
+    localStorage.removeItem("selected-drinks");
+    localStorage.removeItem("selected-drinks-counts");
+  };
+
+  // reset localStorage
+  const goHome = () => {
+    resetStorage();
+    navigate("/home");
+  };
+
   return (
     <div className="h-screen overflow-y-show">
-      {/* TODO: add logo */}
+      <div className="flex justify-center">
+        <img
+          src={require("../../assets/logo.png")}
+          className=".max-w-full and .h-12"
+        />
+      </div>
       {/* navigation bar */}
       <div className="w-screen flex justify-start mt-16">
         <button
@@ -82,7 +90,7 @@ export default function Customer() {
         </button>
 
         <button
-          className="w-1/2 h-1 bg-[#4FC3F7] hover:bg-white hover:text-[#4FC3F7] hover:border-[#4FC3F7] hover:border-2 text-white font-bold mx-1 p-6 rounded-xl text-2xl flex justify-center items-center"
+          className="w-1/2 h-1 bg-[#4FC3F7] hover:bg-white hover:text-[#4FC3F7] hover:border-[#4FC3F7] hover:border-2 text-white font-bold mx-1 p-6 rounded-xl text-2xl flex justify-center items-center border-2 border-black"
           onClick={goCustomer}
         >
           Pizza
@@ -106,7 +114,7 @@ export default function Customer() {
       {/* choose pizza buttons */}
       {/* TODO: reformat and design buttons */}
       <div>
-        <h1 class="text-3xl font-bold ml-20 mb-6 mt-10">Choose Pizza</h1>
+        <h1 class="text-3xl font-bold ml-5 mb-6 mt-10">Choose Pizza</h1>
         <div className="grid lg:grid-cols-4 mx-20 mt-5">
           {pizza_type.map((pizza) => (
             <div>
