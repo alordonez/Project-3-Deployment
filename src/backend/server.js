@@ -35,8 +35,6 @@ function format_putIC(values) {
 
 // GET REQUESTS //
 
-const PORT = process.env.PORT || 5000;
-
 // retrieves all items
 app.get("/item", async (req, res) => {
   try {
