@@ -26,8 +26,20 @@ const GlobalContext = React.createContext({
   setDrinks: () => {},
   selectedItems: [],
   setSelectedItems: () => {},
+  prepSelectedItems: [],
+  setPrepSelectedItems: () => {},
   maxID: 0,
   setMaxID: () => {},
+  showItemAdder: false,
+  setShowItemAdder: () => {},
+  zValue: "z-0",
+  setZValue: () => {},
+  selectedItem: null,
+  setSelectedItem: () => {},
+  showItemEditor: false,
+  setShowItemEditor: () => {},
+  usedOAuth: false,
+  setUsedOAuth: () => {},
 });
 
 export default GlobalContext;

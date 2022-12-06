@@ -18,9 +18,21 @@ export default function ContextWrapper(props) {
   const [veggies, setVeggies] = useState([]);
   const [drinks, setDrinks] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [prepSelectedItems, setPrepSelectedItems] = useState([]);
 
   // stores the max order ID
   const [maxID, setMaxID] = useState(0);
+
+  // needed for managing popups
+  const [zValue, setZValue] = useState("z-0");
+  const [showItemAdder, setShowItemAdder] = useState(false);
+  const [showItemEditor, setShowItemEditor] = useState(false);
+
+  // stores currently selected item
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  // signals whether user signed in with google
+  const [usedOAuth, setUsedOAuth] = useState(false);
 
   return (
     <GlobalContext.Provider
@@ -46,10 +58,22 @@ export default function ContextWrapper(props) {
         setVeggies,
         drinks,
         setDrinks,
+        prepSelectedItems,
+        setPrepSelectedItems,
         selectedItems,
         setSelectedItems,
         maxID,
         setMaxID,
+        showItemAdder,
+        setShowItemAdder,
+        zValue,
+        setZValue,
+        selectedItem,
+        setSelectedItem,
+        showItemEditor,
+        setShowItemEditor,
+        usedOAuth,
+        setUsedOAuth,
       }}
     >
       {props.children}

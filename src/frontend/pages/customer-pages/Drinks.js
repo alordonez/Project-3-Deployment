@@ -4,9 +4,17 @@ import GlobalContext from "../../context/GlobalContext";
 
 export default function Drinks() {
   // prep-drink data
-  const { drinks } = useContext(GlobalContext);
+  const {
+    drinks,
+    selectedItems,
+    setSelectedItems,
+    prepSelectedItems,
+    setPrepSelectedItems,
+  } = useContext(GlobalContext);
+
   const [selectedDrinks, setSelectedDrinks] = useState(drinks);
   const [selectedDrinksCounts, setSelectedDrinksCounts] = useState([]);
+
   let drinksTextFormatted = [];
   for (let i = 0; i < selectedDrinks.length; ++i) {
     let formatText = selectedDrinks[i].label;
@@ -27,6 +35,8 @@ export default function Drinks() {
   // Render Page - Initial Load Data
   useEffect(() => {
     // Selected Drinks
+    console.log(selectedDrinksCounts);
+    console.log(selectedDrinks);
     const data = localStorage.getItem("selected-drinks");
     if (data) {
       setSelectedDrinks(JSON.parse(data));
@@ -34,6 +44,7 @@ export default function Drinks() {
       for (let i = 0; i < selectedDrinks.length; i++) {
         selectedDrinks[i].selected = "";
       }
+      setSelectedDrinks(selectedDrinks);
     }
 
     // Counts for Drinks
@@ -47,17 +58,45 @@ export default function Drinks() {
           count: 0,
         });
       }
+      setSelectedDrinksCounts(selectedDrinksCounts);
     }
   }, []);
 
   // Render Page - Load onto Page
   useEffect(() => {
     // Format Selected Drinks
+    console.log("drinktest", selectedDrinks);
     for (let i = 0; i < selectedDrinks.length; i++) {
       if (selectedDrinks[i].selected === "checked") {
         document.getElementById(selectedDrinks[i].value).checked = true;
+        // Show Count
+        document
+          .getElementById("minus-" + i)
+          .setAttribute(
+            "class",
+            "h-8 w-8 flex items-center justify-center font-bold cursor-pointer border-b-2 border-black text-black"
+          );
+        document
+          .getElementById("num-" + i)
+          .setAttribute("class", "mx-4 font-bold");
+        document
+          .getElementById("plus-" + i)
+          .setAttribute(
+            "class",
+            "h-8 w-8 items-center justify-center flex font-bold cursor-pointer border-b-2 border-black text-black"
+          );
       } else {
         document.getElementById(selectedDrinks[i].value).checked = false;
+        // Hide Count
+        document
+          .getElementById("minus-" + i)
+          .setAttribute("class", "h-8 w-8 text-white");
+        document
+          .getElementById("num-" + i)
+          .setAttribute("class", "mx-4 font-bold text-white");
+        document
+          .getElementById("plus-" + i)
+          .setAttribute("class", "h-8 w-8 text-white");
       }
     }
 
@@ -82,6 +121,20 @@ export default function Drinks() {
   const goCheckout = () => {
     navigate("/checkout");
   };
+
+  let item_counter = prepSelectedItems.length;
+  let drink_counter = 0;
+  for (let i = 0; i < selectedDrinks.length; ++i) {
+    if (selectedDrinks[i].selected == "checked") {
+      drink_counter++;
+    }
+  }
+  item_counter += drink_counter;
+  console.log("testseting", selectedDrinks);
+  useEffect(() => {
+    document.getElementById("item-count").textContent =
+      "(TOTAL ITEMS: " + item_counter + ")";
+  });
 
   // store selected drink and update button
   const selectingDrinks = async (event, index, id) => {
@@ -138,13 +191,22 @@ export default function Drinks() {
         );
       }
     }
+
+    item_counter = prepSelectedItems.length;
+    drink_counter = 0;
+    for (let i = 0; i < selectedDrinks.length; ++i) {
+      if (selectedDrinks[i].selected == "checked") {
+        drink_counter++;
+      }
+    }
+    item_counter += drink_counter;
+    document.getElementById("item-count").textContent =
+      "(TOTAL ITEMS: " + item_counter + ")";
     localStorage.setItem("selected-drinks", JSON.stringify(selectedDrinks));
   };
 
   // plus and minus counter
   const plusMinusCounter = async (event, increment_type, index) => {
-    console.log("plusMinusCounter", increment_type, index);
-    console.log(selectedDrinksCounts);
     if (increment_type === "plus") {
       selectedDrinksCounts[index].count += 1;
     } else {
@@ -173,6 +235,9 @@ export default function Drinks() {
 
   return (
     <div className="h-screen overflow-y-show">
+      <div className="flex justify-center mt-5">
+        <img src={require("../../assets/logo.png")} className="" />
+      </div>
       <div className="w-screen flex justify-start mt-16">
         <button
           className="w-4.5 h-1 bg-[#4FC3F7] hover:bg-white hover:text-[#4FC3F7] hover:border-[#4FC3F7] hover:border-2 text-white mx-6 p-6 rounded-lg text-2xl flex justify-center items-center"
@@ -203,8 +268,13 @@ export default function Drinks() {
         </button>
       </div>
 
-      <div>
-        <h1 class="text-3xl font-bold ml-20 mb-6 mt-10">Choose Drinks</h1>
+      <div className="ml-5 mr-5">
+        <div className="inline-flex">
+          <h1 class="text-3xl font-bold ml-10 mb-6 mt-10">Choose Drink</h1>
+          <h2 id="item-count" class="text-3xl font-bold ml-2 mb-6 mt-10">
+            (TOTAL ITEMS: 0)
+          </h2>
+        </div>
         <div className="grid lg:grid-cols-4">
           {drinks.map((drink, index) => (
             <div className="min-w-full">
@@ -218,7 +288,7 @@ export default function Drinks() {
               <label
                 class=""
                 for={drink.value}
-                className="bg-[#4FC3F7] hover:bg-white hover:text-[#4FC3F7] hover:border-[#4FC3F7] hover:border-2 text-white font-bold mx-12 my-1 p-20 rounded-lg text-l flex justify-center items-center"
+                className="bg-[#4FC3F7] hover:bg-white hover:text-[#4FC3F7] hover:border-[#4FC3F7] hover:border-2 text-white font-bold my-1 p-20 rounded-lg text-l flex justify-center min-w-full items-center"
               >
                 {drinksTextFormatted[index]}
               </label>

@@ -2,6 +2,11 @@ import React, { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import GlobalContext from "../context/GlobalContext";
 import { useNavigate } from "react-router-dom";
+import GoogleLogin from "react-google-login";
+import logo from "../assets/logo.png";
+
+const client_id =
+  "276997609841-if2htiha5o7n10ifa0ror9jsjnctuod1.apps.googleusercontent.com";
 
 export default function Login() {
   const {
@@ -26,6 +31,7 @@ export default function Login() {
     setVeggies,
     setDrizzles,
     setMaxID,
+    setUsedOAuth,
   } = useContext(GlobalContext);
 
   // HELPER FUNCTIONS START HERE //
@@ -58,14 +64,20 @@ export default function Login() {
   useEffect(() => {
     axios.get("http://localhost:5000/item").then((result) => {
       // store all item data
-      setAllItems(result.data);
       const itemData = result.data;
+
+      // format names more appropriately
+      for (let i = 0; i < itemData.length; i++) {
+        itemData[i].name = formatName(itemData[i].name);
+      }
+
+      setAllItems(itemData);
 
       // setup item storage for MUI data tables
       for (let i = 0; i < itemData.length; i++) {
         let item = [];
         item.push(itemData[i].id);
-        item.push(formatName(itemData[i].name));
+        item.push(itemData[i].name);
         item.push(itemData[i].count);
         item.push(itemData[i].price);
         item.push(itemData[i].type);
@@ -78,37 +90,37 @@ export default function Login() {
       for (let i = 0; i < itemData.length; i++) {
         if (itemData[i].type === "sauce" && itemData[i].name !== "regular") {
           sauces.push({
-            label: formatName(itemData[i].name),
+            label: itemData[i].name,
             value: itemData[i].id,
             price: itemData[i].price,
           });
         } else if (itemData[i].type === "topping-meat") {
           meats.push({
-            label: formatName(itemData[i].name),
+            label: itemData[i].name,
             value: itemData[i].id,
             price: itemData[i].price,
           });
         } else if (itemData[i].type === "drizzle") {
           drizzles.push({
-            label: formatName(itemData[i].name),
+            label: itemData[i].name,
             value: itemData[i].id,
             price: itemData[i].price,
           });
         } else if (itemData[i].type === "topping-veggie") {
           veggies.push({
-            label: formatName(itemData[i].name),
+            label: itemData[i].name,
             value: itemData[i].id,
             price: itemData[i].price,
           });
         } else if (itemData[i].type === "drink") {
           drinks.push({
-            label: formatName(itemData[i].name),
+            label: itemData[i].name,
             value: itemData[i].id,
             price: itemData[i].price,
           });
         } else {
           doughs.push({
-            label: formatName(itemData[i].name),
+            label: itemData[i].name,
             value: itemData[i].id,
             price: itemData[i].price,
           });
@@ -167,7 +179,7 @@ export default function Login() {
               j < allOIs.length &&
               orderData[i].id === allOIs[j].order_id
             ) {
-              items.add(allOIs[j].name);
+              items.add(formatName(allOIs[j].name));
               j++;
             }
 
@@ -175,6 +187,7 @@ export default function Login() {
             orderData[i].time_stamp = formatDate(
               String(orderData[i].time_stamp).substring(0, 10)
             );
+            orderData[i].num_toppings = items.size - 3;
           }
 
           setAllOrders(orderData);
@@ -189,15 +202,40 @@ export default function Login() {
     navigate("/home");
   };
 
+  // sends Google sign in user to home page
+  const onSuccess = () => {
+    navigate("/home");
+    setUsedOAuth(true);
+  };
+
+  // handle sign in failure
+  const onFailure = () => {};
+
   return (
-    <div className="h-screen w-full fixed left-0 top-0 flex flex-col items-center">
-      <h1 className="text-gray-500 text-3xl py-[5%]">OAuth Stuff Goes Here</h1>
+    <div className="h-screen w-full flex flex-col items-center justify-center">
+      <img src={logo} alt="Spin 'N Stone Logo" className="mt-[-10%]" />
+      <span
+        id="signInButton"
+        className="text-xl font-semibold mt-[3%] mb-[2%] border rounded-4xl"
+      >
+        <GoogleLogin
+          clientId={client_id}
+          buttonText="Sign in with Google"
+          onSuccess={onSuccess}
+          onFailure={onFailure}
+          cookiePolicy={"single_host_origin"}
+        />
+      </span>
+
+      <h4 className="mb-[2.5%] font-semibold w-[12%]">
+        <span>or</span>
+      </h4>
 
       <button
-        className="w-1/4 h-1/4 bg-[#4FC3F7] hover:bg-white hover:text-[#4FC3F7] hover:border-[#4FC3F7] hover:border-2 text-white font-bold mx-6 p-6 rounded-3xl text-4xl"
+        className="bg-[#4FC3F7] hover:bg-white hover:text-[#4FC3F7] hover:border-[#4FC3F7] hover:border-2 text-white font-semibold mx-6 px-[3%] py-[1%] rounded-md text-xl"
         onClick={goHome}
       >
-        Login
+        Continue as Guest
       </button>
     </div>
   );

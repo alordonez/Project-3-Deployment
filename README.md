@@ -1,29 +1,27 @@
 # TODO LIST (Nov 28 - Dec 4)
 
-## FRONT-END TODOs
+## JASON TODOs (Priority/Difficult Level: (0- Low, 5- High))
 
-### `Customer PAGE` (DIfficulty LEVEL: (0-5))
+### `BUGS TO FIX`
 
-- Simple Design Additions
-  - redesign buttons
-  - add logo
-  - Add background
-- Checkout Page
-  - Setup Data
-  - Use karanja Code
-- Show Current Number of Items
-  - simple counter
-  - design counter bubble
-- Auto selecting no sauce
-- Checkout confetti
-- images for drinks
-- images for special pizza
-- google maps API
+### `Overall`
 
-### `Manager PAGE`
+- Simple Design Additions or Changes
+- Background
 
-### `Server PAGE`
+### `Customer Pizza`
 
-## BACK-END TODOs
+### `APIs`
 
-### `CREATE ORDER BTN`
+- google maps API (1/3)
+  - list of locations
+  - click location and set as desintation
+
+### `Checkout Page` (2/3)
+
+- Remove an Item from the list
+
+### `Special/Drinks`
+
+- images for drinks (1/2)
+- images for special pizza (1/2)
