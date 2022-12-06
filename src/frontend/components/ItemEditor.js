@@ -172,7 +172,7 @@ export default function () {
 
     // process item information (backend)
     axios
-      .put("http://localhost:5000/item", {
+      .put("https://spinnstonebackend.onrender.com/item", {
         name: selectedItem.name,
         price: selectedItem.price,
         count: selectedItem.count,

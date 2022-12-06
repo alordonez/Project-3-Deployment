@@ -107,7 +107,7 @@ export default function ItemAdder() {
 
     // process item information (backend)
     axios
-      .post("http://localhost:5000/item", {
+      .post("https://spinnstonebackend.onrender.com/item", {
         name: itemName,
         price: price,
         count: count,

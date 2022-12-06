@@ -119,7 +119,7 @@ export default function Submission() {
 
     // process order information (backend)
     axios
-      .post("http://localhost:5000/order", {
+      .post("https://spinnstonebackend.onrender.com/order", {
         name: customerName,
         cost: total(),
         num_toppings: 3,
@@ -133,7 +133,7 @@ export default function Submission() {
         }
 
         axios
-          .post("http://localhost:5000/order_item", {
+          .post("https://spinnstonebackend.onrender.com/order_item", {
             order_id: maxID + 1,
             ids: item_ids,
           })
@@ -145,7 +145,7 @@ export default function Submission() {
             }
 
             axios
-              .put("http://localhost:5000/item/count", {
+              .put("https://spinnstonebackend.onrender.com/item/count", {
                 ids: item_ids,
               })
               .then(() => {
