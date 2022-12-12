@@ -74,9 +74,9 @@ export default function Home() {
   return (
     <div className="h-screen w-full fixed left-0 top-0 flex flex-col">
       {/* header section for logout button */}
-      
+
       <div className="flex justify-end items-center px-[3%] my-[1%]">
-      <img src={logo} className="mr-[30%] h-16 w-56 mt-12" />
+        <img src={logo} className="mr-[30%] h-16 w-56 mt-12" />
         {usedOAuth ? (
           <div id="signOutButton" className="mx-[5%]">
             <GoogleLogout
@@ -87,7 +87,7 @@ export default function Home() {
           </div>
         ) : (
           <button
-            className="w-28 h-0 bg-[#4FC3F7] hover:bg-white hover:text-[#4FC3F7] hover:border-[#4FC3F7] hover:border-2 text-white font-bold mx-[4%] py-[2%] rounded-xl text-lg flex justify-center items-center px-[5%] whitespace-nowrap"
+            className="w-28 h-0 bg-[#4FC3F7] hover:bg-white hover:text-[#4FC3F7] hover:border-[#4FC3F7] hover:border-2 text-white font-bold mx-[4%] py-[2%] rounded-xl text-lg flex justify-center items-center px-[5%] whitespace-nowrap hover:text-3xl hover:w-48"
             onClick={logout}
           >
             End Session
@@ -98,33 +98,40 @@ export default function Home() {
       {/* main section for POS mode buttons */}
       <div className="flex justify-center items-start h-3/4">
         <button
-          className="w-3/4 h-full hover:bg-[#4FC3F7] bg-white text-[#4FC3F7] border-[#4FC3F7] border-2  hover:text-white font-bold mx-6 p-6 py-[10%] rounded-xl text-4xl"
+          className="w-3/4 h-full hover:bg-[#4FC3F7] bg-white text-[#4FC3F7] border-[#4FC3F7] border-2  hover:text-white font-bold mx-6 p-6 py-[10%] rounded-xl text-4xl hover:text-6xl"
           onClick={goCustomer}
         >
           Welcome to Spin 'N Stone!
         </button>
         <div className="h-1/3 grid grid-cols-1 ">
-          <button
-            className="w-32 h-20 hover:bg-[#4FC3F7] bg-white text-[#4FC3F7] border-[#4FC3F7] border-2 hover:text-white font-bold mx-6 rounded-xl text-xl"
-            onClick={goManager}
-          >
-            Manager
-          </button>
+          {usedOAuth && (
+            <button
+              className="w-32 h-20 hover:bg-[#4FC3F7] bg-white text-[#4FC3F7] border-[#4FC3F7] border-2 hover:text-white font-bold mx-6 rounded-xl text-xl hover:text-3xl"
+              onClick={goManager}
+            >
+              Manager
+            </button>
+          )}
+
+          {usedOAuth && (
+            <button
+              className="w-32 h-20 hover:bg-[#4FC3F7] bg-white text-[#4FC3F7] border-[#4FC3F7] border-2 hover:text-white font-bold mx-6 rounded-xl text-xl mt-6 hover:text-3xl"
+              onClick={goServer}
+            >
+              Server
+            </button>
+          )}
 
           <button
-            className="w-32 h-20 hover:bg-[#4FC3F7] bg-white text-[#4FC3F7] border-[#4FC3F7] border-2 hover:text-white font-bold mx-6 rounded-xl text-xl mt-6"
-            onClick={goServer}
-          >
-            Server
-          </button>
-
-          <button
-            className="w-32 h-20 hover:bg-[#4FC3F7] bg-white text-[#4FC3F7] border-[#4FC3F7] border-2 hover:text-white font-bold mx-6 rounded-xl text-xl mt-6"
+            className="w-32 h-20 hover:bg-[#4FC3F7] bg-white text-[#4FC3F7] border-[#4FC3F7] border-2 hover:text-white font-bold mx-6 rounded-xl text-xl mt-6 hover:text-3xl hover:w-36"
             onClick={goLocations}
           >
             Locations
           </button>
-          <div id="google_translate_element" className="border rounded-lg mt-6"></div>
+          <div
+            id="google_translate_element"
+            className="border rounded-lg mt-6"
+          ></div>
         </div>
       </div>
     </div>
